@@ -1,0 +1,115 @@
+.formstyle{
+	font: 95% Arial, Helvetica, sans-serif;
+	max-width: 400px;
+	margin: 10px auto;
+	padding: 16px;
+
+}
+.formstyle h1{
+	background: #1769d3;
+	padding: 20px 0;
+	font-size: 140%;
+	font-weight: 300;
+	text-align: center;
+	color: #fff;
+	margin: -16px -16px 16px -16px;
+}
+.formstyle input[type="text"],
+.formstyle input[type="email"],
+.formstyle textarea
+{
+	outline: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 4%;
+	border: 1px solid #ccc;
+	padding: 3%;
+	color: #555;
+	font: 95% Arial, Helvetica, sans-serif;
+}
+.formstyle input[type="text"]:focus,
+.formstyle input[type="email"]:focus,
+.formstyle textarea:focus
+{
+	box-shadow: 0 0 5px #43D1AF;
+	padding: 3%;
+	border: 1px solid #43D1AF;
+}
+
+.formstyle input[type="submit"],
+.submit{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	padding: 3%;
+	background: #1769d3;
+	border-bottom: 2px solid #30C29E;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;	
+    border-radius: 12px;
+	color: #fff;
+}
+.formstyle input[type="submit"]:hover{
+	background: #95bcf0
+}
+
+
+.form-control {
+	margin-bottom: 1rem;
+  }
+  
+  .form-control input,
+  .form-control label {
+	display: block;
+  }
+  
+  .form-control label {
+	font-weight: bold;
+	margin-bottom: 0.5rem;
+  }
+  
+  .form-control input,
+  .form-control select {
+	font: inherit;
+	padding: 0.5rem;
+	border-radius: 4px;
+	border: 1px solid #ccc;
+	width: 20rem;
+	max-width: 100%;
+  }
+  
+  .form-control input:focus {
+	outline: none;
+	border-color: #240370;
+	background-color: #e0d4fd;
+  }
+  
+  .control-group {
+	display: flex;
+	column-gap: 1rem;
+	flex-wrap: wrap;
+  }
+  
+  .control-group .form-control {
+	min-width: 15rem;
+	flex: 1;
+  }
+  
+  .invalid input {
+	border: 1px solid #b40e0e;
+	background-color: #fddddd;
+  }
+  
+  .invalid input:focus {
+	border-color: #ff8800;
+	background-color: #fbe8d2;
+  }
+  
+  .errortext {
+	color: #b40e0e;
+  }

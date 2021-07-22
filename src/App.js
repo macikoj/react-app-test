@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Route } from 'react-router';
+import Navbar from './components/Navbar'
+import WelcomePage from './pages/WelcomePage'
+import Form from './pages/Form'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import FormSummary from './pages/FormSummary'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <main>
+        <Route path='/welcome'>
+          <WelcomePage />
+        </Route>
+        <Route path='/form'>
+          <Form />
+        </Route>
+        <Route path='/form-summary'>
+          <FormSummary />
+        </Route>
+        <Route path='/privacy-policy'>
+          <PrivacyPolicy />
+        </Route>
+      </main>
     </div>
   );
 }
