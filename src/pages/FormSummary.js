@@ -1,21 +1,19 @@
 import classes from './Form.module.css'
 import classes_card from '../globalCSS/Card.module.css'
 import { useDispatch, useSelector } from 'react-redux'
-
+import {formActions} from '../store/form-Slice'
 import { useHistory} from 'react-router-dom';
 const Form = () => {
     const history = useHistory();
-    const  nameAndSurname=useSelector(state=>state.nameAndSurname)
-    const  email=useSelector(state=>state.email)
-    const  textArea=useSelector(state=>state.textArea)
+    const  nameAndSurname=useSelector(state=>state.form.nameAndSurname)
+    const  email=useSelector(state=>state.form.email)
+    const  textArea=useSelector(state=>state.form.textArea)
 
     const dispatch=useDispatch()
     
     const returnHandler=()=>{
-        dispatch({
-            type: 'clearForm',
-        })
-        history.push("/welcome");
+        dispatch(formActions.clearForm())
+        history.push("/");
     }
     return (
         <div className={classes_card.card} style={{ height: '700px' }}>

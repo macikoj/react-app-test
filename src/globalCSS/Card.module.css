@@ -14,14 +14,36 @@ body {
     border-radius: 20px;
     box-shadow: 0 0 20px 8px #d0d0d0;
 }
+select {
 
+	outline: none;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	width: 100%;
+	background: #fff;
+	margin-bottom: 4%;
+	border: 1px solid #ccc;
+	padding: 3%;
+    margin-top: 3%;
+	color: #555;
+	font: 95% Arial, Helvetica, sans-serif;
+  }
+  select:focus{
+    
+        box-shadow: 0 0 5px #43D1AF;
+        padding: 3%;
+        border: 1px solid #43D1AF;
+    
+  }
 .content {
     position: absolute;
     top: 50%;
     transform: translatey(-50%);
-    text-align: justify;
+
     color: black;
     padding: 40px;
+    font-size: 20px;
     font-family: 'Merriweather', serif;
 }
 .footer {

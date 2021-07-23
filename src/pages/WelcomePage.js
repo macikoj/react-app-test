@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import classes_card from '../globalCSS/Card.module.css'
+import { formActions } from '../store/form-Slice';
 const WelcomePage = () => {
     const dispatch = useDispatch();
-    const selectedDepartment = useSelector(state => state.selectedDepartment)
+    const selectedDepartment = useSelector(state => state.form.department)
     const departments = ['XYZ Warszawa, Poland', 'ABC Kraków, Poland', 'RNQ Berlin, Germany']
 
 
@@ -13,7 +14,7 @@ const WelcomePage = () => {
 
 
     const selectChangeHandler = (event) => {
-        dispatch({ type: 'selectDepartment', department: event.target.value })
+        dispatch(formActions.selectDepartment({department:event.target.value}))
     }
 
     return (

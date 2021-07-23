@@ -1,24 +1,31 @@
 import classes from './Form.module.css'
 import classes_card from '../globalCSS/Card.module.css'
-import { useDispatch } from 'react-redux'
-
-import { useHistory} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 import useInput from '../hoks/use-input'
+import { formActions } from '../store/form-Slice'
 const isNotEmpty = (value) => value.trim() !== '';
 const isEmail = (value) => value.includes('@');
 const Form = () => {
     const history = useHistory();
 
-    useEffect(async () => {
-        const response = await fetch(
-            "https://baconipsum.com/api/?type=all-meat&paras=2")
-        if (!response.ok) {
-            throw new Error('Fetch data error');
+    const time = useSelector(state => state.time.time)
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch(
+                "https://baconipsum.com/api/?type=all-meat&paras=2")
+            if (!response.ok) {
+                throw new Error('Fetch data error');
+            }
+            const result = await response.json();
+            textAreaChangeHandler(result[0])
         }
-        const result = await response.json();
-        textAreaChangeHandler(result[0])
+        fetchData()
     }, []);
+
+
 
     const dispatch = useDispatch();
 
@@ -28,7 +35,6 @@ const Form = () => {
         hasError: nameAndSurnameHasError,
         valueChangeHandler: nameAndSurnameChangeHandler,
         inputBlurHandler: nameAndSurnameBlurHandler,
-        reset: resetNameAndSurname,
     } = useInput(isNotEmpty);
     const {
         value: emailValue,
@@ -36,7 +42,6 @@ const Form = () => {
         hasError: emailHasError,
         valueChangeHandler: emailChangeHandler,
         inputBlurHandler: emailBlurHandler,
-        reset: resetEmai,
     } = useInput(isEmail);
     const {
         value: textAreaValue,
@@ -44,13 +49,25 @@ const Form = () => {
         hasError: textAreaHasError,
         valueChangeHandler: textAreaChangeHandler,
         inputBlurHandler: textAreaBlurHandler,
-        reset: resetTextArea,
     } = useInput(isNotEmpty);
+
+    let timeIsValid = false
+
+    const seconds = parseInt(time.slice(-2))
+
+    if ((seconds >= 10 && seconds <= 19) ||
+        (seconds >= 30 && seconds <= 39) ||
+        (seconds >= 50 && seconds <= 59)) {
+        timeIsValid = false
+    } else {
+        timeIsValid = true
+    }
 
     let formIsValid = false;
 
-    if (nameAndSurnameIsValid && emailIsValid && textAreaIsValid) {
+    if (nameAndSurnameIsValid && emailIsValid && textAreaIsValid && timeIsValid) {
         formIsValid = true;
+
     }
 
     const submitFormHandler = (event) => {
@@ -59,22 +76,15 @@ const Form = () => {
         if (!formIsValid) {
             return;
         }
-        dispatch({
-            type: 'submitForm',
+        dispatch(formActions.submitForm({
             nameAndSurname: nameAndSurnameValue,
             email: emailValue,
-            textArea: textAreaValue
-        })
+            textArea: textAreaValue,
+        }))
         history.push("/form-summary");
 
 
     }
-
-
-    const nameAndSurnameClasses = nameAndSurnameHasError ? 'form-control invalid' : 'form-control';
-    const emailClasses = emailHasError ? 'form-control invalid' : 'form-control';
-    const textAreaClasses = textAreaHasError ? 'form-control invalid' : 'form-control';
-
 
 
     return (
@@ -82,7 +92,7 @@ const Form = () => {
             <div className={classes.formstyle}>
                 <form onSubmit={submitFormHandler}>
                     <div className='control-group'>
-                        <div className={nameAndSurnameClasses}>
+                        <div>
                             <input type="text"
                                 placeholder="Your Name and Surname"
                                 value={nameAndSurnameValue}
@@ -91,7 +101,7 @@ const Form = () => {
                             />
                             {nameAndSurnameHasError && <p className={classes.errortext}>Input is required.</p>}
                         </div>
-                        <div className={classes.emailClasses}>
+                        <div>
                             <input
                                 type="email"
                                 placeholder="Email Address"
@@ -101,7 +111,7 @@ const Form = () => {
                             />
                             {emailHasError && <p className={classes.errortext}>Please enter a valid email address.</p>}
                         </div>
-                        <div className={textAreaClasses}>
+                        <div>
                             <textarea
                                 rows='18'
                                 placeholder="Type your Message"
@@ -109,11 +119,12 @@ const Form = () => {
                                 value={textAreaValue}
                                 onChange={textAreaChangeHandler}
                                 onBlur={textAreaBlurHandler}
+                                style={{ resize: 'none' }}
                             />
                             {textAreaHasError && <p className={classes.errortext}>Input is required.</p>}
-
+                            {!timeIsValid && <p className={classes.errortext}>You cannot send form right now.</p>}
                         </div>
-                        <button className={classes.submit} disabled={!formIsValid}>send
+                        <button className={classes.submit} disabled={!formIsValid}>Send
                         </button>
 
                     </div>
